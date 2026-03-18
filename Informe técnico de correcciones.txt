@@ -1,0 +1,172 @@
+# Informe Técnico – Corrección del Pipeline de Detección de Defectos (DETR)
+
+## 1. Problema inicial
+
+Durante el entrenamiento del modelo DETR para detección de defectos en PCB, se observaron los siguientes problemas:
+
+* Bounding boxes incorrectas (líneas largas o mal ubicadas)
+* Detecciones inconsistentes o inexistentes
+* Valores de pérdida (loss) elevados (~600–700) sin mejora significativa
+* Predicciones con baja confianza
+
+Esto indicaba que el modelo no estaba aprendiendo correctamente.
+
+---
+
+## 2. Diagnóstico
+
+Se analizó el pipeline de datos, específicamente la construcción del dataset (`DeepPCBDataset`), detectándose múltiples errores en la interpretación de las anotaciones.
+
+### 2.1 Suposición incorrecta del formato
+
+Inicialmente se asumió que las anotaciones estaban en formato YOLO:
+
+* `(cx, cy, w, h)` normalizado
+
+Sin embargo, esto resultó incorrecto.
+
+---
+
+### 2.2 Formato real de las anotaciones
+
+Luego de inspeccionar directamente los archivos `.txt`, se determinó que el formato real es:
+
+```
+xmin  ymin  xmax  ymax  clase
+```
+
+Características:
+
+* Coordenadas en píxeles (no normalizadas)
+* Esquinas de la bounding box (no centro)
+* Clase al final de la línea
+
+Ejemplo:
+
+```
+466 441 493 470 3
+```
+
+---
+
+### 2.3 Error crítico en la lectura
+
+El código original leía:
+
+```python
+parts[1:5]
+```
+
+Esto generaba:
+
+* Desplazamiento incorrecto de los valores
+* Interpretación errónea de coordenadas
+* Bounding boxes inválidas
+
+---
+
+## 3. Correcciones implementadas
+
+### 3.1 Lectura correcta de las anotaciones
+
+Se modificó la lectura a:
+
+```python
+xmin, ymin, xmax, ymax = map(float, parts[0:4])
+label = int(parts[4])
+```
+
+---
+
+### 3.2 Eliminación de conversiones innecesarias
+
+Se eliminaron:
+
+* Conversión desde formato YOLO
+* Normalización/división por dimensiones de la imagen
+
+Ya que los datos están directamente en píxeles.
+
+---
+
+### 3.3 Validación y limpieza de bounding boxes
+
+Se agregaron las siguientes mejoras:
+
+* Clamp de coordenadas dentro de la imagen:
+
+```python
+xmin = max(0, min(xmin, img_w))
+```
+
+* Corrección de orden:
+
+```python
+xmin, xmax = sorted([xmin, xmax])
+ymin, ymax = sorted([ymin, ymax])
+```
+
+* Eliminación de cajas degeneradas:
+
+```python
+if (xmax - xmin) < 1 or (ymax - ymin) < 1:
+    continue
+```
+
+---
+
+## 4. Resultado de las correcciones
+
+Antes:
+
+* Bounding boxes erróneas (ej: `[640, 640, 640, 640]`)
+* Modelo sin capacidad de aprendizaje real
+* Detecciones visualmente incorrectas
+
+Después:
+
+* Bounding boxes correctas en píxeles:
+
+```python
+[409., 394., 435., 422.]
+```
+
+* Coherencia espacial con los defectos reales
+* Dataset compatible con DETR
+
+---
+
+## 5. Impacto en el entrenamiento
+
+Se espera que, tras estas correcciones:
+
+* La loss disminuya significativamente (de ~600 a <100 o menos)
+* Las predicciones sean más precisas
+* Las bounding boxes se ajusten correctamente a los defectos
+* Mejore la confianza de las detecciones
+
+---
+
+## 6. Conclusión
+
+El problema principal no estaba en el modelo, sino en el preprocesamiento de los datos.
+
+La incorrecta interpretación del formato de anotaciones provocaba que el modelo entrenara con información inválida.
+
+Una vez corregido el dataset, el pipeline queda correctamente alineado con los requerimientos de DETR, permitiendo un entrenamiento efectivo.
+
+---
+
+## 7. Próximos pasos
+
+* Reentrenar el modelo desde cero
+* Evaluar métricas (precision, recall)
+* Ajustar threshold de detección
+* Generar visualizaciones finales para validación
+
+---
+
+**Estado actual:**
+✔ Dataset corregido
+✔ Bounding boxes validadas
+✔ Listo para entrenamiento correcto
