@@ -1,0 +1,22 @@
+{
+  "experiment_name": "overnight_lr_5e5_bb_1e5",
+  "learning_rate": 5e-05,
+  "learning_rate_backbone": 1e-05,
+  "batch_size": 4,
+  "epochs": 30,
+  "optimizer": "AdamW",
+  "weight_decay": 0.0001,
+  "max_grad_norm": 0.1,
+  "num_workers": 2,
+  "train_size": 700,
+  "val_size": 150,
+  "test_size": 150,
+  "classes": [
+    "open",
+    "short",
+    "mousebite",
+    "spur",
+    "copper",
+    "pin-hole"
+  ]
+}

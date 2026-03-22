@@ -1,0 +1,48 @@
+{
+  "suite_name": "detr_deeppcb_suite_20260322_151016",
+  "best_experiment_name": "overnight_lr_3e5_bb_1e5",
+  "best_val_loss": 0.5066682437532827,
+  "best_run_dir": "runs/detr_deeppcb_suite_20260322_151016/overnight_lr_3e5_bb_1e5",
+  "experiments": [
+    {
+      "experiment_name": "overnight_lr_3e5_bb_1e5",
+      "best_val_loss": 0.5066682437532827,
+      "run_dir": "runs/detr_deeppcb_suite_20260322_151016/overnight_lr_3e5_bb_1e5"
+    },
+    {
+      "experiment_name": "overnight_lr_5e5_bb_1e5",
+      "best_val_loss": 0.5093205861355129,
+      "run_dir": "runs/detr_deeppcb_suite_20260322_151016/overnight_lr_5e5_bb_1e5"
+    },
+    {
+      "experiment_name": "overnight_lr_2e5_bb_1e5",
+      "best_val_loss": 0.5174913398529354,
+      "run_dir": "runs/detr_deeppcb_suite_20260322_151016/overnight_lr_2e5_bb_1e5"
+    },
+    {
+      "experiment_name": "overnight_lr_3e5_bb_8e6",
+      "best_val_loss": 0.5229089691450721,
+      "run_dir": "runs/detr_deeppcb_suite_20260322_151016/overnight_lr_3e5_bb_8e6"
+    },
+    {
+      "experiment_name": "overnight_lr_3e5_bb_1p5e5",
+      "best_val_loss": 0.5101790726184845,
+      "run_dir": "runs/detr_deeppcb_suite_20260322_151016/overnight_lr_3e5_bb_1p5e5"
+    },
+    {
+      "experiment_name": "overnight_lr_3e5_bb_1e5_wd_5e5",
+      "best_val_loss": 0.5217562874681071,
+      "run_dir": "runs/detr_deeppcb_suite_20260322_151016/overnight_lr_3e5_bb_1e5_wd_5e5"
+    },
+    {
+      "experiment_name": "overnight_lr_3e5_bb_1e5_wd_2e4",
+      "best_val_loss": 0.518444761633873,
+      "run_dir": "runs/detr_deeppcb_suite_20260322_151016/overnight_lr_3e5_bb_1e5_wd_2e4"
+    },
+    {
+      "experiment_name": "overnight_lr_5e5_bb_5e6",
+      "best_val_loss": 0.5704400100206074,
+      "run_dir": "runs/detr_deeppcb_suite_20260322_151016/overnight_lr_5e5_bb_5e6"
+    }
+  ]
+}
