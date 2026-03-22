@@ -167,6 +167,7 @@ Una vez corregido el dataset, el pipeline queda correctamente alineado con los r
 ---
 
 **Estado actual:**
-✔ Dataset corregido
-✔ Bounding boxes validadas
-✔ Listo para entrenamiento correcto
+
+* Dataset corregido
+* Bounding boxes validadas
+* Listo para entrenamiento correcto
