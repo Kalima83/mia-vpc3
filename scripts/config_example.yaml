@@ -1,0 +1,16 @@
+data:
+  root_dir: /content/DeepPCB/PCBData
+  train_sz: 0.8
+  seed: 42
+model_name: facebook/detr-resnet-50
+train:
+  batch_sz:
+    train: 4
+    valid: 4
+  optim:
+    lr: 5e-5
+    weight_decay: 1e-4
+  trainer:
+    epochs: 30
+    patience: 3
+  save_dir: /content/drive/MyDrive/entrenamiento_detr
