@@ -75,7 +75,7 @@ def get_split(dataset: Dataset, train_sz: float = 0.8, seed: int = 42) -> list[S
     # Fijar semilla para reproducibilidad
     torch.manual_seed(seed)
 
-    train_size = int(0.8 * len(dataset))
+    train_size = int(train_sz * len(dataset))
     test_size = len(dataset) - train_size
 
     return random_split(

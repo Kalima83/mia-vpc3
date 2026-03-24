@@ -2,7 +2,6 @@ import os
 import torch
 from scripts.evaluate import eval_on_validation
 from time import perf_counter
-import json
 
 from scripts.utils import subset_dict
 
@@ -55,8 +54,8 @@ def train(model, processor, device, optimizer, train_loader, val_loader, epochs,
         "map": "mAP",
         "map_50": "mAP@50",
         "iou": "IoU",
-        "train_elapsed": "Train time(s)",
-        "val_elapsed": "Valid time(s)"
+        "train_elapsed": "Train time (s)",
+        "val_elapsed": "Valid time (s)"
     }
 
     # =========================
@@ -97,7 +96,7 @@ def train(model, processor, device, optimizer, train_loader, val_loader, epochs,
 
         # loggear
         cur_metrics["train_elapsed"] = train_elapsed_secs
-        cur_metrics["valid_elapsed"] = val_elapsed_secs
+        cur_metrics["val_elapsed"] = val_elapsed_secs
 
         # buildear str para metricas
         log_str = f"[{epoch+1:>2}/{epochs}] "
