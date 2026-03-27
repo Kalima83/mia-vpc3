@@ -1,8 +1,13 @@
+experiment_name: ejemplo_local
 data:
-  root_dir: /content/DeepPCB/PCBData
+  root_dir: DeepPCB/PCBData
   train_sz: 0.8
   seed: 42
 model_name: facebook/detr-resnet-50
+eval:
+  score_threshold: 0.5
+  iou_match_threshold: 0.5
+  class_metrics: true
 train:
   batch_sz:
     train: 4
@@ -10,7 +15,17 @@ train:
   optim:
     lr: 5e-5
     weight_decay: 1e-4
+    lr_backbone: 1e-5
   trainer:
     epochs: 30
     patience: 3
-  save_dir: /content/drive/MyDrive/entrenamiento_detr
+    max_grad_norm: 0.1
+  num_workers: 0
+  save_dir: runs/ejemplo_local
+wandb:
+  enabled: true
+  project: deeppcb-detr
+  mode: offline
+  tags:
+    - local
+    - ejemplo

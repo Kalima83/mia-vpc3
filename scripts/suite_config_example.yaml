@@ -1,0 +1,85 @@
+base_config:
+  data:
+    root_dir: DeepPCB/PCBData
+    train_sz: 0.8
+    seed: 42
+  model_name: facebook/detr-resnet-50
+  eval:
+    score_threshold: 0.5
+    iou_match_threshold: 0.5
+    class_metrics: true
+  train:
+    batch_sz:
+      train: 4
+      valid: 4
+    optim:
+      lr: 3e-5
+      weight_decay: 1e-4
+      lr_backbone: 1e-5
+    trainer:
+      epochs: 30
+      patience: 3
+      max_grad_norm: 0.1
+    num_workers: 0
+  wandb:
+    enabled: true
+    project: deeppcb-detr
+    mode: offline
+    tags:
+      - suite
+      - overnight
+
+experiments:
+  - name: overnight_lr_3e5_bb_1e5
+    overrides:
+      train:
+        optim:
+          lr: 3e-5
+          lr_backbone: 1e-5
+
+  - name: overnight_lr_5e5_bb_1e5
+    overrides:
+      train:
+        optim:
+          lr: 5e-5
+          lr_backbone: 1e-5
+
+  - name: overnight_lr_2e5_bb_1e5
+    overrides:
+      train:
+        optim:
+          lr: 2e-5
+          lr_backbone: 1e-5
+
+  - name: overnight_lr_3e5_bb_8e6
+    overrides:
+      train:
+        optim:
+          lr: 3e-5
+          lr_backbone: 8e-6
+
+  - name: overnight_lr_3e5_bb_1p5e5
+    overrides:
+      train:
+        optim:
+          lr: 3e-5
+          lr_backbone: 1.5e-5
+
+  - name: overnight_lr_3e5_bb_1e5_wd_5e5
+    overrides:
+      train:
+        optim:
+          weight_decay: 5e-5
+
+  - name: overnight_lr_3e5_bb_1e5_wd_2e4
+    overrides:
+      train:
+        optim:
+          weight_decay: 2e-4
+
+  - name: overnight_lr_5e5_bb_5e6
+    overrides:
+      train:
+        optim:
+          lr: 5e-5
+          lr_backbone: 5e-6

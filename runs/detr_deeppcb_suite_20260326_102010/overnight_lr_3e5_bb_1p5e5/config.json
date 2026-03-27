@@ -1,0 +1,45 @@
+{
+  "experiment_name": "overnight_lr_3e5_bb_1p5e5",
+  "data": {
+    "root_dir": "DeepPCB/PCBData",
+    "train_sz": 0.8,
+    "seed": 42
+  },
+  "model_name": "facebook/detr-resnet-50",
+  "train": {
+    "batch_sz": {
+      "train": 4,
+      "valid": 4
+    },
+    "optim": {
+      "lr": 3e-05,
+      "weight_decay": 0.0001,
+      "lr_backbone": 1.5e-05
+    },
+    "trainer": {
+      "epochs": 30,
+      "patience": 3,
+      "max_grad_norm": 0.1
+    },
+    "save_dir": "runs/detr_deeppcb_suite_20260326_102010/overnight_lr_3e5_bb_1p5e5",
+    "num_workers": 0
+  },
+  "eval": {
+    "score_threshold": 0.5,
+    "iou_match_threshold": 0.5,
+    "class_metrics": true
+  },
+  "wandb": {
+    "enabled": true,
+    "project": "deeppcb-detr",
+    "entity": null,
+    "mode": "offline",
+    "name": "detr_deeppcb_suite_20260326_102010_overnight_lr_3e5_bb_1p5e5",
+    "group": "detr_deeppcb_suite_20260326_102010",
+    "tags": [
+      "suite",
+      "overnight"
+    ],
+    "dir": "runs/detr_deeppcb_suite_20260326_102010/wandb/overnight_lr_3e5_bb_1p5e5"
+  }
+}
